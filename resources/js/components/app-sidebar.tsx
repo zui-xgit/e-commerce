@@ -1,0 +1,102 @@
+import { Link } from "@inertiajs/react";
+import {
+    CreditCard,
+    FileText,
+    ImageIcon,
+    Images,
+    LayoutGrid,
+    Package,
+    Settings,
+    ShoppingBag,
+    SlidersHorizontal,
+    Store,
+    Tags,
+    UserCog,
+    Users,
+} from "lucide-react";
+import AppLogo from "@/components/app-logo";
+import { FooterToolbarSidebarMenu } from "@/components/footer-toolbar-sidebar-menu";
+import { NavFooter } from "@/components/nav-footer";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import type { NavItem } from "@/types";
+import admin from "@/routes/admin";
+
+const topItems: NavItem[] = [
+    {
+        title: "Dashboard",
+        href: admin.dashboard(),
+        icon: LayoutGrid,
+    },
+];
+
+const storeItems: NavItem[] = [
+    { title: "Orders", href: "#", icon: ShoppingBag },
+    { title: "Categories", href: admin.categoriesIndex().url, icon: Tags },
+    { title: "Products", href: admin.productsIndex().url, icon: Package },
+    { title: "Payments", href: "#", icon: CreditCard },
+];
+
+const peopleItems: NavItem[] = [
+    { title: "Customers", href: "#", icon: Users },
+    { title: "Staff", href: "#", icon: UserCog },
+];
+
+const contentItems: NavItem[] = [
+    { title: "Banners", href: admin.bannersIndex().url, icon: ImageIcon },
+    { title: "Media", href: "#", icon: Images },
+    { title: "Pages", href: "#", icon: FileText }, // later: /admin/pages
+];
+
+const settingsItems: NavItem[] = [
+    {
+        title: "Site",
+        href: admin.siteSettings.edit().url,
+        icon: Store,
+    },
+    {
+        title: "Admin",
+        href: "#",
+        icon: SlidersHorizontal,
+    },
+];
+
+export function AppSidebar() {
+    return (
+        <Sidebar collapsible="icon" variant="inset">
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton size="lg" asChild>
+                            <Link href={admin.dashboard()} prefetch>
+                                <AppLogo />
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
+
+            <SidebarContent>
+                <NavMain groupLable="Top" items={topItems} />
+                <NavMain groupLable="Store" items={storeItems} />
+                <NavMain groupLable="People" items={peopleItems} />
+                <NavMain groupLable="Content" items={contentItems} />
+                <NavMain groupLable="Settings" items={settingsItems} />
+            </SidebarContent>
+
+            <SidebarFooter>
+                <FooterToolbarSidebarMenu />
+                {/* <NavUser /> */}
+            </SidebarFooter>
+        </Sidebar>
+    );
+}
