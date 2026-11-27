@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { Plus, Star } from "lucide-react";
+import { Package, Plus, Star } from "lucide-react";
 import productsRoute from "@/routes/products";
 import { useStorefrontCartStore } from "@/hooks/stores/use-storefront-cart-store";
 import type { StorefrontProduct } from "@/types/storefront-catalog";
@@ -13,7 +13,8 @@ type ProductCardProps = {
 
 export function ProductCard({ product }: ProductCardProps) {
     const hasDiscount = product.discountPercentage >= 1 && product.savings > 0;
-    const thumbnail = product.thumbnailUrl ?? product.images?.[0]?.url ?? "";
+    const thumbnail =
+        product.thumbnailUrl ?? product.images?.[0]?.url ?? undefined;
 
     const addToCart = useStorefrontCartStore((state) => state.addToCart);
     const cartQuantity = useStorefrontCartStore(
@@ -43,15 +44,24 @@ export function ProductCard({ product }: ProductCardProps) {
                 className="flex flex-1 flex-col rounded-t-2xl focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none focus-visible:ring-inset"
             >
                 <div className="relative aspect-square overflow-hidden bg-brand-soft">
-                    <img
-                        src={thumbnail}
-                        alt={product.title}
-                        width={300}
-                        height={300}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-contain p-3 transition-transform duration-300 motion-safe:group-focus-within:scale-105 motion-safe:group-hover:scale-105"
-                    />
+                    {thumbnail ? (
+                        <img
+                            src={thumbnail}
+                            alt={product.title}
+                            width={300}
+                            height={300}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-contain p-3 transition-transform duration-300 motion-safe:group-focus-within:scale-105 motion-safe:group-hover:scale-105"
+                        />
+                    ) : (
+                        <span className="flex size-full items-center justify-center text-brand/30">
+                            <Package
+                                aria-hidden="true"
+                                className="size-12"
+                            />
+                        </span>
+                    )}
                     {hasDiscount && (
                         <span className="absolute top-2 left-2 rounded-full bg-coral px-2.5 py-1 text-[11px] font-extrabold text-surface">
                             -{Math.round(product.discountPercentage)}%

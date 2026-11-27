@@ -20,7 +20,6 @@ void createInertiaApp({
             case name === "auth/verify-email":
                 return null;
             case name === "storefront/checkout":
-                // Checkout owns its own minimal shell; no storefront header/footer.
                 return null;
             case name.startsWith("auth/"):
                 return AuthLayout;
@@ -28,6 +27,8 @@ void createInertiaApp({
                 return [AppLayout, SettingsLayout];
             case name.startsWith("storefront/account"):
                 return [StorefrontLayout, AccountLayout];
+            case name.startsWith("storefront/order-completed"):
+                return null;
             case name.startsWith("storefront/"):
                 return StorefrontLayout;
             default:

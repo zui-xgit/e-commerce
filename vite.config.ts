@@ -37,8 +37,9 @@ export default defineConfig({
                 "**/.cursor/**",
                 "**/.junie/**",
                 "**/vendor/**",
-                // "**/.open-code/**",
-                // "**/.impeccable/**",
+
+                "**/.opencode/**",
+                "**/.impeccable/**",
 
                 "**/inertia-devtools/**",
             ],

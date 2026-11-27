@@ -142,7 +142,7 @@ export function CartPopover({ children }: { children: ReactNode }) {
                                     className="flex items-center gap-3"
                                 >
                                     <img
-                                        src={item.product.thumbnailUrl ?? ""}
+                                        src={item.product.thumbnailUrl ?? undefined}
                                         alt=""
                                         aria-hidden="true"
                                         width={48}

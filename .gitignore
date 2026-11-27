@@ -45,7 +45,8 @@ yarn-error.log
 /opencode.jsonc
 
 
-
+/.opencode
+/.impeccable
 
 /database/seeders/data/
 z.txt

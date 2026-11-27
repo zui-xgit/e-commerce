@@ -1,33 +1,37 @@
 export type StorefrontOrderStatus = 'pending' | 'processed';
 
 export type StorefrontOrderItem = {
-    id: number;
+    uuid: string;
     title: string;
     price: number;
+    originalPrice: number;
     quantity: number;
     discountPercentage: number;
     discountedTotal: number;
-    thumbnail: string;
+    thumbnailUrl: string | null;
+};
+
+export type StorefrontDeliveryAddress = {
+    country: string;
+    name: string;
+    company: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    phone: string;
+    email: string;
 };
 
 export type StorefrontOrder = {
-    id: number;
+    uuid: string;
+    orderNumber: string;
     placedOn: string;
     status: StorefrontOrderStatus;
     items: StorefrontOrderItem[];
     total: number;
-    discountedTotal: number;
+    originalTotal: number;
+    savings: number;
     totalProducts: number;
     totalQuantity: number;
-    userId: number;
-};
-
-export type StorefrontAddress = {
-    name: string;
-    line: string;
-    city: string;
-    region: string;
-    postalCode: string;
-    country: string;
-    phone: string;
+    deliveryAddress: StorefrontDeliveryAddress | null;
 };

@@ -228,7 +228,7 @@ export default function Home() {
                                     <CategoryTile
                                         key={category.uuid}
                                         name={category.name}
-                                        thumbnail={category.thumbnailUrl ?? ''}
+                                        thumbnail={category.thumbnailUrl ?? undefined}
                                         active={
                                             activeCategory === category.uuid
                                         }

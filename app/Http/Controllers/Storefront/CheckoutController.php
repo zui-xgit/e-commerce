@@ -9,6 +9,7 @@ use App\Support\DeliveryFields;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -35,6 +36,11 @@ class CheckoutController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+        $user = Auth::user(); 
+
+
+        
         $items = $request->input('items', []);
 
         $stockByUuid = is_array($items)
@@ -120,7 +126,6 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => $request->user()?->id,
                 'order_number' => self::newOrderNumber(),
-                'status' => 'pending',
                 'total' => $total,
             ]);
 
@@ -133,6 +138,10 @@ class CheckoutController extends Controller
             );
 
             DB::commit();
+
+            $this->flash('success', 'Your order has been placed successfully!');
+  
+            
         } catch (Throwable $exception) {
             DB::rollBack();
 
@@ -142,8 +151,11 @@ class CheckoutController extends Controller
             return back(); 
         }
 
-           $this->flash('success', 'Your order has been placed successfully!');
-        return back();
+        if($user){
+             return redirect()->route('account.orders.show', ['order' => $order->uuid]);
+        }
+        
+        return redirect()->route('order-completed');
     }
 
     private static function newOrderNumber(): string

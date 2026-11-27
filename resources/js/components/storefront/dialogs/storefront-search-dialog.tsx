@@ -173,7 +173,7 @@ export function StorefrontSearchDialog({
                                             src={
                                                 product.thumbnailUrl ??
                                                 product.images?.[0]?.url ??
-                                                ""
+                                                undefined
                                             }
                                             alt=""
                                             aria-hidden="true"

@@ -215,7 +215,7 @@ export default function StorefrontProductsIndexPage() {
                         className="block size-24 shrink-0 overflow-hidden rounded-2xl bg-surface focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:size-32 lg:size-44"
                     >
                         <img
-                            src={featured.thumbnailUrl ?? ""}
+                            src={featured.thumbnailUrl ?? undefined}
                             alt={featured.title}
                             width={300}
                             height={300}

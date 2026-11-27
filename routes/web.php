@@ -5,8 +5,8 @@ use App\Http\Controllers\Storefront\CartProductController;
 use App\Http\Controllers\Storefront\CheckoutController;
 use App\Models\User;
 use App\Http\Controllers\Storefront\HomeController;
+use App\Http\Controllers\Storefront\OrderController;
 use App\Http\Controllers\Storefront\ProductController;
-use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +17,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/suggest', [ProductController::class, 'suggest'])->name('products.suggest');
+
 Route::get('/products/{product:uuid}', [ProductController::class, 'show'])
     ->whereUuid('product')
     ->name('products.show');
@@ -28,6 +29,8 @@ Route::middleware('can:checkout,'.User::class)->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
+
+Route::inertia('/order-completed', 'storefront/order-completed')->name('order-completed');
 
 Route::inertia('/about', 'storefront/about')->name('about');
 Route::inertia('/contact', 'storefront/contact')->name('contact');
@@ -43,10 +46,10 @@ Route::prefix('policies')->name('policies.')->group(function () {
 
 Route::middleware(['auth', 'verified',  'role:customer'])->group(function () {
     
-    Route::inertia('/account/orders', 'storefront/account/orders/index')
+    Route::get('/account/orders', [OrderController::class, 'index'])
         ->name('account.orders.index');
-    Route::inertia('/account/orders/{order}', 'storefront/account/orders/show')
-        ->whereNumber('order')
+    Route::get('/account/orders/{order:uuid}', [OrderController::class, 'show'])
+        ->whereUuid('order')
         ->name('account.orders.show');
     Route::inertia('/account/profile', 'storefront/account/profile')
         ->name('account.profile');

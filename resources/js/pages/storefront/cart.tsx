@@ -180,7 +180,7 @@ export default function StorefrontCartPage() {
                                                 <img
                                                     src={
                                                         product.thumbnailUrl ??
-                                                        ''
+                                                        undefined
                                                     }
                                                     alt=""
                                                     aria-hidden="true"
