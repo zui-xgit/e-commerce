@@ -146,10 +146,10 @@ class ProductController extends Controller
     public function suggest(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'q' => ['sometimes', 'string', 'max:100'],
+            'query' => ['sometimes', 'string', 'max:100'],
         ]);
 
-        $term = trim((string) ($validated['q'] ?? ''));
+        $term = trim((string) ($validated['query'] ?? ''));
         $products = Product::query()
             ->where('is_active', true)
             ->with(['category:id,uuid,name', 'images']);
@@ -160,8 +160,6 @@ class ProductController extends Controller
             $products->where(function ($query) use ($like): void {
                 $query->where('title', 'like', $like)
                     ->orWhere('brand', 'like', $like)
-                    ->orWhere('sku', 'like', $like)
-                    ->orWhere('description', 'like', $like)
                     ->orWhereHas('category', fn ($category) => $category->where('name', 'like', $like));
             });
         }
@@ -170,4 +168,7 @@ class ProductController extends Controller
 
         return ProductResource::collection($products->get())->response();
     }
+
+
+    
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->string('order_number')->unique();
-            $table->enum('status', ['pending', 'processed'])->default('pending');
+            $table->enum('status', ['pending', 'cancelled',  'processed'])->default('pending');
 
             $table->unsignedBigInteger('total');
         

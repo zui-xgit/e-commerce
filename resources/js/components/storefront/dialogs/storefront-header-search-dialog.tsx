@@ -1,6 +1,6 @@
-import { useEffect, useState, type ReactElement } from "react";
-import { router } from "@inertiajs/react";
+import { router, useHttp } from "@inertiajs/react";
 import { Star } from "lucide-react";
+import { useDebouncedCallback } from "use-debounce";
 import {
     Command,
     CommandEmpty,
@@ -17,9 +17,14 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { useSiteSettings } from "@/hooks/use-site-settings";
-import productsRoute, { suggest as suggestRoute } from "@/routes/products";
 import type { StorefrontProduct } from "@/types/storefront-catalog";
 import { formatPrice } from "@/lib/storefront/format-price";
+import products from "@/routes/products";
+import { ReactNode, useState } from "react";
+
+type SearchResponse = { data: StorefrontProduct[] };
+
+type UseHttpProps = { query: string };
 
 function SearchSkeleton() {
     return (
@@ -41,88 +46,39 @@ function SearchSkeleton() {
     );
 }
 
-export function StorefrontSearchDialog({
+export function StorefrontHeaderSearchDialog({
     children,
 }: {
-    children: ReactElement;
+    children: ReactNode;
 }) {
     const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState("");
-    const [products, setProducts] = useState<StorefrontProduct[]>([]);
-    const [status, setStatus] = useState<"loading" | "ready">("ready");
     const currency = useSiteSettings().currency;
 
-    useEffect(() => {
-        if (!open) return;
+    const [searchResults, setSearchResults] = useState<StorefrontProduct[]>([]);
 
-        const controller = new AbortController();
-        const term = query.trim();
+    const { data, setData, get, processing } = useHttp<UseHttpProps>({
+        query: "",
+    });
 
-        const timer = window.setTimeout(
-            () => {
-                setStatus("loading");
-
-                fetch(
-                    suggestRoute.url({ query: term ? { q: term } : undefined }),
-                    {
-                        signal: controller.signal,
-                        headers: { Accept: "application/json" },
-                    },
-                )
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error(
-                                `Search failed (${response.status})`,
-                            );
-                        }
-                        return response.json();
-                    })
-                    .then(
-                        (
-                            payload:
-                                | StorefrontProduct[]
-                                | { data: StorefrontProduct[] },
-                        ) => {
-                            setProducts(
-                                Array.isArray(payload) ? payload : payload.data,
-                            );
-                            setStatus("ready");
-                        },
-                    )
-                    .catch((error: unknown) => {
-                        if (
-                            error instanceof Error &&
-                            error.name === "AbortError"
-                        ) {
-                            return;
-                        }
-                        setProducts([]);
-                        setStatus("ready");
-                    });
+    const debouncedSearch = useDebouncedCallback(() => {
+        get(products.suggest().url, {
+            onSuccess: (response) => {
+                const { data } = response as SearchResponse;
+                setSearchResults(data);
             },
-            term ? 250 : 0,
-        );
+        });
+    }, 500);
 
-        return () => {
-            window.clearTimeout(timer);
-            controller.abort();
-        };
-    }, [open, query]);
-
-    const handleOpenChange = (nextOpen: boolean) => {
-        setOpen(nextOpen);
-        if (!nextOpen) {
-            setQuery("");
-        }
+    const handleValueChange = (value: string) => {
+        setData("query", value);
+        debouncedSearch();
     };
 
-    const term = query.trim();
-
     return (
-        <Dialog open={open} onOpenChange={handleOpenChange}>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
 
-            <DialogContent className="storefront top-[10vh] block w-[min(92vw,56rem)] max-w-[min(92vw,56rem)] translate-y-0 rounded-xl border border-line bg-surface p-0 text-ink shadow-2xl sm:max-w-[min(92vw,56rem)] [&_[data-slot=command-input-wrapper]]:border-line [&_[data-slot=command-input-wrapper]]:focus-within:border-brand [&_[data-slot=command-input-wrapper]_svg]:text-brand-deep [&>button]:text-ink-muted [&>button]:hover:bg-surface-alt [&>button]:hover:text-brand-deep">
+            <DialogContent className="storefront top-[10dvh] flex max-h-[calc(90dvh_-_2rem)] w-[min(92vw,56rem)] max-w-[min(92vw,56rem)] translate-y-0 flex-col overflow-hidden rounded-xl border border-line bg-surface p-0 text-ink shadow-2xl sm:max-w-[min(92vw,56rem)] [&_[data-slot=command-input-wrapper]]:border-line [&_[data-slot=command-input-wrapper]]:focus-within:border-brand [&_[data-slot=command-input-wrapper]_svg]:text-brand-deep [&_[data-slot=command-input-wrapper]]:shrink-0 [&>button]:text-ink-muted [&>button]:hover:bg-surface-alt [&>button]:hover:text-brand-deep">
                 <DialogHeader className="sr-only">
                     <DialogTitle>Search products</DialogTitle>
                     <DialogDescription>
@@ -132,47 +88,49 @@ export function StorefrontSearchDialog({
 
                 <Command
                     shouldFilter={false}
-                    className="storefront rounded-2xl bg-surface text-ink"
+                    className="storefront h-auto min-h-0 flex-auto flex-col overflow-hidden rounded-2xl bg-surface text-ink"
                 >
                     <CommandInput
                         autoFocus
-                        value={query}
-                        onValueChange={setQuery}
+                        value={data.query}
+                        onValueChange={handleValueChange}
                         placeholder="Search products, brands or categories…"
                     />
 
-                    <CommandList className="storefront max-h-[24rem] p-2">
+                    <CommandList className="storefront max-h-none min-h-0 flex-auto overflow-x-hidden overflow-y-auto p-2">
                         <p className="px-2 py-1.5 text-[11px] font-extrabold tracking-wide text-ink-muted uppercase">
-                            {term ? "Matching products" : "Popular right now"}
+                            {data.query
+                                ? "Matching products"
+                                : "Popular right now"}
                         </p>
 
-                        {status === "loading" ? (
+                        {processing ? (
                             <SearchSkeleton />
                         ) : (
                             <>
                                 <CommandEmpty className="storefront py-10 text-center text-sm text-ink-muted">
-                                    {term
-                                        ? `No products match “${term}”. Try another search.`
+                                    {data.query
+                                        ? `No products match “${data.query}”. Try another search.`
                                         : "No products are on the shelf yet."}
                                 </CommandEmpty>
-                                {products.map((product) => (
+                                {searchResults.map((result) => (
                                     <CommandItem
-                                        key={product.uuid}
-                                        value={product.title}
+                                        key={result.uuid}
+                                        value={result.title}
                                         onSelect={() => {
-                                            handleOpenChange(false);
+                                            setOpen(false);
                                             router.visit(
-                                                productsRoute.show({
-                                                    product: product.uuid,
-                                                }).url,
+                                                products.show({
+                                                    product: result.uuid,
+                                                }),
                                             );
                                         }}
                                         className="storefront flex items-center gap-3 rounded-xl px-3 py-2.5 data-[selected=true]:bg-brand-soft data-[selected=true]:text-brand-deep"
                                     >
                                         <img
                                             src={
-                                                product.thumbnailUrl ??
-                                                product.images?.[0]?.url ??
+                                                result.thumbnailUrl ??
+                                                result.images?.[0]?.url ??
                                                 undefined
                                             }
                                             alt=""
@@ -184,19 +142,19 @@ export function StorefrontSearchDialog({
                                         />
                                         <div className="min-w-0 flex-1">
                                             <p className="line-clamp-1 text-sm font-semibold">
-                                                {product.title}
+                                                {result.title}
                                             </p>
                                             <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">
-                                                {product.categoryName}
-                                                {product.brand
-                                                    ? ` · ${product.brand}`
+                                                {result.categoryName}
+                                                {result.brand
+                                                    ? ` · ${result.brand}`
                                                     : ""}
                                             </p>
                                         </div>
                                         <div className="shrink-0 text-right">
                                             <p className="text-sm font-extrabold text-brand tabular-nums">
                                                 {formatPrice(
-                                                    product.discountedPrice,
+                                                    result.discountedPrice,
                                                     currency,
                                                 )}
                                             </p>
@@ -206,7 +164,7 @@ export function StorefrontSearchDialog({
                                                     className="size-3 fill-star text-star"
                                                 />
                                                 <span className="tabular-nums">
-                                                    {product.rating.toFixed(1)}
+                                                    {result.rating.toFixed(1)}
                                                 </span>
                                             </p>
                                         </div>
@@ -216,7 +174,7 @@ export function StorefrontSearchDialog({
                         )}
                     </CommandList>
 
-                    <div className="storefront flex items-center justify-between gap-3 border-t border-line bg-surface-alt px-4 py-2.5 text-[11px] font-semibold text-ink-muted">
+                    <div className="storefront flex shrink-0 items-center justify-between gap-3 border-t border-line bg-surface-alt px-4 py-2.5 text-[11px] font-semibold text-ink-muted">
                         <span>Catalogue from your store</span>
                         <span className="hidden sm:inline">
                             Type to search · Enter to select · Esc to close

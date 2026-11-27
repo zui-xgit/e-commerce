@@ -29,11 +29,11 @@ import { CartPopover } from "./cart-popover";
 import { LanguagePopover } from "./language-popover";
 import { MobileDrawerSheet } from "./sheets/mobile-drawer-sheet";
 import { MonthlyDealsDialog } from "./dialogs/monthly-deals-dialog";
-import { StorefrontSearchDialog } from "./dialogs/storefront-search-dialog";
 import { Container } from "./container";
 import { cn } from "@/lib/utils";
 import icons from "@/assets/icons";
 import account from "@/routes/account";
+import { StorefrontHeaderSearchDialog } from "./dialogs/storefront-header-search-dialog";
 
 const menuItemClassName =
     "flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-ink transition-colors hover:bg-brand-soft hover:text-brand-deep focus:bg-brand-soft focus:text-brand-deep";
@@ -300,7 +300,7 @@ export default function StorefrontHeader() {
                         </nav>
 
                         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
-                            <StorefrontSearchDialog>
+                            <StorefrontHeaderSearchDialog>
                                 <button
                                     type="button"
                                     aria-label="Search products"
@@ -311,9 +311,9 @@ export default function StorefrontHeader() {
                                         className="size-[18px] sm:size-5"
                                     />
                                 </button>
-                            </StorefrontSearchDialog>
+                            </StorefrontHeaderSearchDialog>
 
-                            <StorefrontSearchDialog>
+                            <StorefrontHeaderSearchDialog>
                                 <button
                                     type="button"
                                     aria-label="Search products"
@@ -327,7 +327,7 @@ export default function StorefrontHeader() {
                                         Search products…
                                     </span>
                                 </button>
-                            </StorefrontSearchDialog>
+                            </StorefrontHeaderSearchDialog>
 
                             <div className="hidden sm:block">
                                 <LanguagePopover />
