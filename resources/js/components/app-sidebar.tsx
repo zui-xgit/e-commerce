@@ -6,7 +6,6 @@ import {
     Images,
     LayoutGrid,
     Package,
-    Settings,
     ShoppingBag,
     SlidersHorizontal,
     Store,
@@ -16,9 +15,7 @@ import {
 } from "lucide-react";
 import AppLogo from "@/components/app-logo";
 import { FooterToolbarSidebarMenu } from "@/components/footer-toolbar-sidebar-menu";
-import { NavFooter } from "@/components/nav-footer";
 import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
 import {
     Sidebar,
     SidebarContent,
@@ -40,9 +37,9 @@ const topItems: NavItem[] = [
 ];
 
 const storeItems: NavItem[] = [
-    { title: "Orders", href: "#", icon: ShoppingBag },
-    { title: "Categories", href: admin.categoriesIndex().url, icon: Tags },
-    { title: "Products", href: admin.productsIndex().url, icon: Package },
+    { title: "Orders", href: admin.orders.index().url, icon: ShoppingBag },
+    { title: "Categories", href: admin.categories.index().url, icon: Tags },
+    { title: "Products", href: admin.products.index().url, icon: Package },
     { title: "Payments", href: "#", icon: CreditCard },
 ];
 
@@ -52,7 +49,7 @@ const peopleItems: NavItem[] = [
 ];
 
 const contentItems: NavItem[] = [
-    { title: "Banners", href: admin.bannersIndex().url, icon: ImageIcon },
+    { title: "Banners", href: admin.banners.index().url, icon: ImageIcon },
     { title: "Media", href: "#", icon: Images },
     { title: "Pages", href: "#", icon: FileText }, // later: /admin/pages
 ];

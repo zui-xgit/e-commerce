@@ -37,7 +37,7 @@ export function CategoryDeleteDialog({
             return;
         }
 
-        destroy(admin.categoriesDestroy(category.uuid).url, {
+        destroy(admin.categories.destroy(category.uuid).url, {
             preserveScroll: true,
             onSuccess: () => onOpenChange(false),
         });

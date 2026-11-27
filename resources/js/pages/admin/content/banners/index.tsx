@@ -46,7 +46,7 @@ export default function BannersIndex({
 
     const visitFilters = useCallback((next: BannerFilters) => {
         setFiltering(true);
-        router.get(admin.bannersIndex().url, next, {
+        router.get(admin.banners.index().url, next, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -168,7 +168,7 @@ export default function BannersIndex({
                                         key={banner.uuid}
                                         className="cursor-pointer"
                                         onClick={() => {
-                                            router.visit(admin.bannersShow(banner.uuid).url);
+                                            router.visit(admin.banners.show(banner.uuid).url);
                                         }}
                                     >
                                         <TableCell className="pl-4">
@@ -224,7 +224,7 @@ export default function BannersIndex({
                                                     <DropdownMenuItem
                                                         onClick={() =>
                                                             router.visit(
-                                                                admin.bannersShow(banner.uuid).url,
+                                                                admin.banners.show(banner.uuid).url,
                                                             )
                                                         }
                                                     >
@@ -305,7 +305,7 @@ BannersIndex.layout = {
         },
         {
             title: "Banners",
-            href: admin.bannersIndex().url,
+            href: admin.banners.index().url,
         },
     ],
 };

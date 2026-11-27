@@ -52,7 +52,7 @@ class ProductDestroyTest extends TestCase
         Storage::disk('public')->put($firstImage->path, 'first');
         Storage::disk('public')->put($secondImage->path, 'second');
 
-        $response = $this->delete(route('admin.products-destroy', $product->uuid));
+        $response = $this->delete(route('admin.products.destroy', $product->uuid));
 
         $response->assertSessionHasNoErrors();
 
@@ -94,7 +94,7 @@ class ProductDestroyTest extends TestCase
         Storage::disk('public')->put($kept->thumbnail, 'kept');
         Storage::disk('public')->put($keptImage->path, 'kept');
 
-        $this->delete(route('admin.products-destroy', $deleted->uuid));
+        $this->delete(route('admin.products.destroy', $deleted->uuid));
 
         Storage::disk('public')->assertMissing($deleted->thumbnail);
         Storage::disk('public')->assertMissing($deletedImage->path);

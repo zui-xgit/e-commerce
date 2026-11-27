@@ -42,7 +42,7 @@ class ProductUpdateMediaTest extends TestCase
             'sort_order' => 0,
         ]);
 
-        $response = $this->put(route('admin.products-update', $product->uuid), $this->payload($product, [
+        $response = $this->put(route('admin.products.update', $product->uuid), $this->payload($product, [
             'title' => 'Renamed product',
             'image_order' => [$image->uuid],
         ]));
@@ -68,7 +68,7 @@ class ProductUpdateMediaTest extends TestCase
             'sort_order' => 0,
         ]);
 
-        $response = $this->put(route('admin.products-update', $product->uuid), $this->payload($product, [
+        $response = $this->put(route('admin.products.update', $product->uuid), $this->payload($product, [
             'removed_images' => [$image->uuid],
             'image_order' => [],
         ]));
@@ -85,7 +85,7 @@ class ProductUpdateMediaTest extends TestCase
             'sort_order' => 0,
         ]);
 
-        $response = $this->put(route('admin.products-update', $product->uuid), $this->payload($product, [
+        $response = $this->put(route('admin.products.update', $product->uuid), $this->payload($product, [
             'removed_images' => [$image->uuid],
             'images' => [UploadedFile::fake()->image('replacement.png')],
         ]));

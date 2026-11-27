@@ -28,7 +28,7 @@ class BannerImageValidationTest extends TestCase
 
     public function test_creating_requires_an_image(): void
     {
-        $response = $this->post(route('admin.banners-store'), [
+        $response = $this->post(route('admin.banners.store'), [
             'title' => 'No image',
             'sort_order' => 0,
             'is_active' => true,
@@ -40,20 +40,20 @@ class BannerImageValidationTest extends TestCase
 
     public function test_minimum_banner_dimensions_are_accepted(): void
     {
-        $response = $this->post(route('admin.banners-store'), [
+        $response = $this->post(route('admin.banners.store'), [
             'title' => 'Summer sale hero',
             'sort_order' => 0,
             'is_active' => true,
             'image' => UploadedFile::fake()->image('hero.png', 1280, 560),
         ]);
 
-        $response->assertRedirect(route('admin.banners-index'));
+        $response->assertRedirect(route('admin.banners.index'));
         $this->assertDatabaseHas('banners', ['title' => 'Summer sale hero']);
     }
 
     public function test_images_smaller_than_the_minimum_are_rejected(): void
     {
-        $response = $this->post(route('admin.banners-store'), [
+        $response = $this->post(route('admin.banners.store'), [
             'title' => 'Too small',
             'sort_order' => 0,
             'is_active' => true,
@@ -66,7 +66,7 @@ class BannerImageValidationTest extends TestCase
 
     public function test_images_outside_the_banner_aspect_range_are_rejected(): void
     {
-        $response = $this->post(route('admin.banners-store'), [
+        $response = $this->post(route('admin.banners.store'), [
             'title' => 'Too tall',
             'sort_order' => 0,
             'is_active' => true,
@@ -86,7 +86,7 @@ class BannerImageValidationTest extends TestCase
             'is_active' => true,
         ]);
 
-        $response = $this->post(route('admin.banners-update', $banner->uuid), [
+        $response = $this->post(route('admin.banners.update', $banner->uuid), [
             '_method' => 'put',
             'title' => 'Renamed banner',
             'sort_order' => 0,

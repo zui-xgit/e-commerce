@@ -127,7 +127,7 @@ class BannerController extends Controller
 
       
 
-        return to_route('admin.banners-index');
+        return to_route('admin.banners.index');
     }
 
   
@@ -198,7 +198,7 @@ class BannerController extends Controller
             'message' => __('Banner ":title" removed.', ['title' => $banner->title]),
         ]);
 
-        return to_route('admin.banners-index');
+        return to_route('admin.banners.index');
     }
 
     private function storeFile(UploadedFile $file, string $directory): ?string

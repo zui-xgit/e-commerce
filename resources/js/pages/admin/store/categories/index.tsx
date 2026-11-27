@@ -51,7 +51,7 @@ export default function CategoriesIndex({
 
     const visitFilters = useCallback((next: CategoryFilters) => {
         setFiltering(true);
-        router.get(admin.categoriesIndex().url, next, {
+        router.get(admin.categories.index().url, next, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -197,7 +197,7 @@ export default function CategoriesIndex({
                                         className="cursor-pointer"
                                         onClick={() => {
                                             router.visit(
-                                                admin.categoriesShow(
+                                                admin.categories.show(
                                                     category.uuid,
                                                 ).url,
                                             );
@@ -266,7 +266,7 @@ export default function CategoriesIndex({
                                                     <DropdownMenuItem
                                                         onClick={() =>
                                                             router.visit(
-                                                                admin.categoriesShow(
+                                                                admin.categories.show(
                                                                     category.uuid,
                                                                 ).url,
                                                             )
@@ -376,7 +376,7 @@ CategoriesIndex.layout = {
         },
         {
             title: "Categories",
-            href: admin.categoriesIndex().url,
+            href: admin.categories.index().url,
         },
     ],
 };

@@ -317,7 +317,7 @@ ProductShow.layout = {
     breadcrumbs: [
         {
             title: "Product",
-            href: admin.productsIndex().url,
+            href: admin.products.index().url,
         },
         {
             title: "Show",

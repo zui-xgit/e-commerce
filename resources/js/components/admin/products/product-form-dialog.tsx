@@ -332,9 +332,9 @@ export function ProductFormDialog({
         };
 
         if (product) {
-            put(admin.productsUpdate(product.uuid).url, options);
+            put(admin.products.update(product.uuid).url, options);
         } else {
-            post(admin.productsStore().url, options);
+            post(admin.products.store().url, options);
         }
     };
 

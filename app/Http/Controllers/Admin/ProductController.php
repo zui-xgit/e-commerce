@@ -188,7 +188,7 @@ class ProductController extends Controller
             'message' => __('Product ":title" created.', ['title' => $product->title]),
         ]);
 
-        return to_route('admin.products-index');
+        return to_route('admin.products.index');
     }
 
     /**

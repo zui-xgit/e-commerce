@@ -35,7 +35,7 @@ class OrderResource extends JsonResource
             'uuid' => (string) $order->uuid,
             'orderNumber' => (string) $order->order_number,
             'placedOn' => $order->created_at?->toDateString() ?? '',
-            'status' => (string) $order->status,
+            'status' => $order->status->value,
             'items' => $this->whenLoaded('items', fn (): array => $items
                 ->map(fn (OrderItem $item): array => [
                     'uuid' => (string) $item->uuid,

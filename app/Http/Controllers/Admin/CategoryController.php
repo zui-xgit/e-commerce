@@ -191,7 +191,7 @@ class CategoryController extends Controller
             'message' => __('Category ":name" removed.', ['name' => $category->name]),
         ]);
 
-        return to_route('admin.categories-index');
+        return to_route('admin.categories.index');
     }
 
     private function storeFile(UploadedFile $file, string $directory): ?string

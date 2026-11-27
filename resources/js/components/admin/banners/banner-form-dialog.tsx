@@ -217,11 +217,11 @@ export function BannerFormDialog({
         };
 
         if (banner) {
-            post(admin.bannersUpdate(banner.uuid).url, options);
+            post(admin.banners.update(banner.uuid).url, options);
             return;
         }
 
-        post(admin.bannersStore().url, options);
+        post(admin.banners.store().url, options);
     };
 
     const imageSource = imagePreview ?? banner?.image_url ?? null;

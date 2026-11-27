@@ -15,6 +15,11 @@ const STATUS: Record<
         className: 'bg-success/10 text-ink',
         dotClassName: 'bg-success',
     },
+    cancelled: {
+        label: 'Cancelled',
+        className: 'bg-error/10 text-ink',
+        dotClassName: 'bg-error',
+    },
 };
 
 export function OrderStatusBadge({

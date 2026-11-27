@@ -76,7 +76,7 @@ export default function ProductsIndex({
 
     const visitFilters = useCallback((next: ProductFilters) => {
         setFiltering(true);
-        router.get(admin.productsIndex().url, next, {
+        router.get(admin.products.index().url, next, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -224,7 +224,7 @@ export default function ProductsIndex({
                                         key={index}
                                         onClick={() => {
                                             router.visit(
-                                                admin.productsShow(product.uuid)
+                                                admin.products.show(product.uuid)
                                                     .url,
                                             );
                                         }}
@@ -306,7 +306,7 @@ export default function ProductsIndex({
                                                     <DropdownMenuItem
                                                         onClick={() =>
                                                             router.visit(
-                                                                admin.productsShow(
+                                                                admin.products.show(
                                                                     product.uuid,
                                                                 ).url,
                                                             )
@@ -412,7 +412,7 @@ ProductsIndex.layout = {
         },
         {
             title: "Products",
-            href: admin.productsIndex().url,
+            href: admin.products.index().url,
         },
     ],
 };

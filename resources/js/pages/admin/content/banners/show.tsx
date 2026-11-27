@@ -123,7 +123,7 @@ BannerShow.layout = {
         },
         {
             title: "Banners",
-            href: admin.bannersIndex().url,
+            href: admin.banners.index().url,
         },
         {
             title: "Details",

@@ -33,7 +33,7 @@ export function BannerDeleteDialog({
             return;
         }
 
-        destroy(admin.bannersDestroy(banner.uuid).url, {
+        destroy(admin.banners.destroy(banner.uuid).url, {
             preserveScroll: true,
             onSuccess: () => onOpenChange(false),
         });

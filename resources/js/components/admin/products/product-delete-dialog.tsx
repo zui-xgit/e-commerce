@@ -35,7 +35,7 @@ export function ProductDeleteDialog({
             return;
         }
 
-        destroy(admin.productsDestroy(product.uuid).url, {
+        destroy(admin.products.destroy(product.uuid).url, {
             preserveScroll: true,
             onSuccess: () => onOpenChange(false),
         });

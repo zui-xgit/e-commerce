@@ -122,7 +122,7 @@ export default function CategoryShow({
                                         </p>
                                     </div>
                                     <Button variant="outline" size="sm" asChild>
-                                        <Link href={admin.productsIndex().url}>
+                                        <Link href={admin.products.index().url}>
                                             <Plus />
                                             Go to products
                                         </Link>
@@ -153,7 +153,7 @@ export default function CategoryShow({
                                                 <TableCell className="pl-6">
                                                     <Link
                                                         href={
-                                                            admin.productsShow(
+                                                            admin.products.show(
                                                                 product.uuid,
                                                             ).url
                                                         }
@@ -260,7 +260,7 @@ CategoryShow.layout = {
         },
         {
             title: "Categories",
-            href: admin.categoriesIndex().url,
+            href: admin.categories.index().url,
         },
     ],
 };

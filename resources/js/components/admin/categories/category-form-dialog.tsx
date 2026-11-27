@@ -166,11 +166,11 @@ export function CategoryFormDialog({
 
         if (category) {
             form.transform((current) => ({ ...current, _method: "put" }));
-            post(admin.categoriesUpdate(category.uuid).url, options);
+            post(admin.categories.update(category.uuid).url, options);
             return;
         }
 
-        post(admin.categoriesStore().url, options);
+        post(admin.categories.store().url, options);
     };
 
     const thumbnailSource =
