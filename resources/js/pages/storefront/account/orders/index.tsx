@@ -29,6 +29,7 @@ const FILTERS: { value: StatusFilter; label: string }[] = [
     { value: "all", label: "All orders" },
     { value: "pending", label: "Pending" },
     { value: "processed", label: "Processed" },
+    { value: "cancelled", label: "Cancelled" },
 ];
 
 export default function StorefrontOrdersIndexPage() {

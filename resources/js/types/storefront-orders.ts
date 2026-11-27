@@ -1,4 +1,4 @@
-export type StorefrontOrderStatus = 'pending' | 'processed';
+export type StorefrontOrderStatus = 'pending' | 'processed' | 'cancelled';
 
 export type StorefrontOrderItem = {
     uuid: string;

@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
+import type { ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -7,7 +7,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 type ConfirmDialogProps = {
     open: boolean;
@@ -17,6 +17,7 @@ type ConfirmDialogProps = {
     confirmLabel?: string;
     cancelLabel?: string;
     destructive?: boolean;
+    size?: 'default' | 'wide';
     onConfirm: () => void;
 };
 
@@ -25,9 +26,10 @@ export function ConfirmDialog({
     onOpenChange,
     title,
     description,
-    confirmLabel = "Confirm",
-    cancelLabel = "Cancel",
+    confirmLabel = 'Confirm',
+    cancelLabel = 'Cancel',
     destructive = false,
+    size = 'default',
     onConfirm,
 }: ConfirmDialogProps) {
     const handleConfirm = () => {
@@ -37,10 +39,15 @@ export function ConfirmDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-sm" showCloseButton={false}>
+            <DialogContent
+                className={size === 'wide' ? 'sm:max-w-4xl' : 'sm:max-w-sm'}
+                showCloseButton={false}
+            >
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
-                    <DialogDescription>{description}</DialogDescription>
+                    <DialogDescription asChild>
+                        <div>{description}</div>
+                    </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                     <Button
@@ -52,7 +59,7 @@ export function ConfirmDialog({
                     </Button>
                     <Button
                         type="button"
-                        variant={destructive ? "destructive" : "default"}
+                        variant={destructive ? 'destructive' : 'default'}
                         onClick={handleConfirm}
                     >
                         {confirmLabel}

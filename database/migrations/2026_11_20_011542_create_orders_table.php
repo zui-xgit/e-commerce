@@ -21,6 +21,20 @@ return new class extends Migration
             $table->string('order_number')->unique();
             $table->enum('status', ['pending', 'cancelled',  'processed'])->default('pending');
 
+            $table->foreignIdFor(User::class, 'processed_by')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+            $table->foreignIdFor(User::class, 'cancelled_by')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            $table->timestamp('confirmed_at')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
+            $table->string('cancellation_reason')->nullable();
+            
+
             $table->unsignedBigInteger('total');
         
             $table->timestamps();

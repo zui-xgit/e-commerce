@@ -214,7 +214,7 @@ export default function ProductsIndex({
                                         Added
                                     </TableHead>
                                     <TableHead className="w-12 pr-4">
-                                        <span className="sr-only">Actions</span>
+                                        <span>Actions</span>
                                     </TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -224,8 +224,9 @@ export default function ProductsIndex({
                                         key={index}
                                         onClick={() => {
                                             router.visit(
-                                                admin.products.show(product.uuid)
-                                                    .url,
+                                                admin.products.show(
+                                                    product.uuid,
+                                                ).url,
                                             );
                                         }}
                                         className="cursor-pointer"

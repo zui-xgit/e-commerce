@@ -113,7 +113,9 @@ export function ProductFiltersSheet({
                     <ProductFilters
                         categories={categories}
                         value={draft}
-                        onChange={(next) => setDraft((current) => ({ ...current, ...next }))}
+                        onChange={(next) =>
+                            setDraft((current) => ({ ...current, ...next }))
+                        }
                     />
                 </div>
 

@@ -22,6 +22,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/orders/show/{order:uuid}', [OrderController::class, 'show'])->name('admin.orders.show');
     Route::post('admin/orders/{order:uuid}/confirm', [OrderController::class, 'confirm'])->name('admin.orders.confirm');
     Route::post('admin/orders/{order:uuid}/cancel', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
+    Route::delete('admin/orders/{order:uuid}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+    Route::post('admin/orders/bulk-delete', [OrderController::class, 'bulkDestroy'])->name('admin.orders.bulk-destroy');
 
     Route::get('admin/products/index', [ProductController::class, 'index'])->name('admin.products.index');
     Route::get('admin/products/show/{product:uuid}', [ProductController::class, 'show'])->name('admin.products.show');

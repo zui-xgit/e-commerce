@@ -40,7 +40,6 @@ const storeItems: NavItem[] = [
     { title: "Orders", href: admin.orders.index().url, icon: ShoppingBag },
     { title: "Categories", href: admin.categories.index().url, icon: Tags },
     { title: "Products", href: admin.products.index().url, icon: Package },
-    { title: "Payments", href: "#", icon: CreditCard },
 ];
 
 const peopleItems: NavItem[] = [
@@ -51,7 +50,6 @@ const peopleItems: NavItem[] = [
 const contentItems: NavItem[] = [
     { title: "Banners", href: admin.banners.index().url, icon: ImageIcon },
     { title: "Media", href: "#", icon: Images },
-    { title: "Pages", href: "#", icon: FileText }, // later: /admin/pages
 ];
 
 const settingsItems: NavItem[] = [
@@ -59,11 +57,6 @@ const settingsItems: NavItem[] = [
         title: "Site",
         href: admin.siteSettings.edit().url,
         icon: Store,
-    },
-    {
-        title: "Admin",
-        href: "#",
-        icon: SlidersHorizontal,
     },
 ];
 

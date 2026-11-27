@@ -186,7 +186,7 @@ export default function CategoriesIndex({
                                         Added
                                     </TableHead>
                                     <TableHead className="w-12 pr-4">
-                                        <span className="sr-only">Actions</span>
+                                        <span>Actions</span>
                                     </TableHead>
                                 </TableRow>
                             </TableHeader>

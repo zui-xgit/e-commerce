@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'search' => ['sometimes', 'string', 'max:100'],
-            'status' => ['sometimes', 'string', 'in:all,pending,processed'],
+            'status' => ['sometimes', 'string', 'in:all,pending,processed,cancelled'],
         ]);
 
         $filters = [
@@ -65,6 +65,7 @@ class OrderController extends Controller
                 'all' => (int) $statusCounts->sum(),
                 'pending' => (int) ($statusCounts['pending'] ?? 0),
                 'processed' => (int) ($statusCounts['processed'] ?? 0),
+                'cancelled' => (int) ($statusCounts['cancelled'] ?? 0),
             ],
         ]);
     }

@@ -26,6 +26,9 @@ return new class extends Migration
             $table->unsignedBigInteger('price');
             $table->unsignedInteger('quantity');
 
+             $table->unsignedInteger('confirmed_quantity')
+                ->default(0);
+
             $table->decimal('discount_percentage', 5, 2)->default(0);
             $table->decimal('rating', 3, 2)->default(0);
 
