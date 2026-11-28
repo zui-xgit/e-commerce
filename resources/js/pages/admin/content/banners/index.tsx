@@ -1,5 +1,12 @@
 import { Head, router } from "@inertiajs/react";
-import { Eye, ImageIcon, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
+import {
+    Eye,
+    ImageIcon,
+    MoreHorizontal,
+    Pencil,
+    Plus,
+    Trash2,
+} from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { BannerDeleteDialog } from "@/components/admin/banners/banner-delete-dialog";
 import { BannerFiltersBar } from "@/components/admin/banners/banner-filters";
@@ -24,7 +31,11 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import admin from "@/routes/admin";
-import type { AdminBanner, BannerFilters, BannersIndexProps } from "@/types/admin-banners";
+import type {
+    AdminBanner,
+    BannerFilters,
+    BannersIndexProps,
+} from "@/types/admin-banners";
 
 const EMPTY_FILTERS: BannerFilters = {
     search: "",
@@ -92,7 +103,9 @@ export default function BannersIndex({
         filters.search || filters.status !== "all" || filters.sort !== "newest",
     );
     const from =
-        banners.total === 0 ? 0 : (banners.current_page - 1) * banners.per_page + 1;
+        banners.total === 0
+            ? 0
+            : (banners.current_page - 1) * banners.per_page + 1;
     const to = Math.min(banners.current_page * banners.per_page, banners.total);
 
     return (
@@ -105,7 +118,11 @@ export default function BannersIndex({
                         title="Banners"
                         description="Manage storefront banners, their images, and display order."
                     />
-                    <Button id="add-banner-toolbar" onClick={openCreate} className="w-full sm:w-auto">
+                    <Button
+                        id="add-banner-toolbar"
+                        onClick={openCreate}
+                        className="w-full sm:w-auto"
+                    >
                         <Plus />
                         Add banner
                     </Button>
@@ -127,7 +144,9 @@ export default function BannersIndex({
                         </div>
                         <div className="space-y-1">
                             <h2 className="text-base font-semibold">
-                                {hasFilters ? "No banners match those filters" : "No banners yet"}
+                                {hasFilters
+                                    ? "No banners match those filters"
+                                    : "No banners yet"}
                             </h2>
                             <p className="mx-auto max-w-sm text-sm text-muted-foreground">
                                 {hasFilters
@@ -153,10 +172,16 @@ export default function BannersIndex({
                         <Table>
                             <TableHeader>
                                 <TableRow className="bg-muted/40 hover:bg-muted/40">
-                                    <TableHead className="pl-4">Banner</TableHead>
-                                    <TableHead className="text-right">Order</TableHead>
+                                    <TableHead className="pl-4">
+                                        Banner
+                                    </TableHead>
+                                    <TableHead className="text-right">
+                                        Order
+                                    </TableHead>
                                     <TableHead>Status</TableHead>
-                                    <TableHead className="hidden xl:table-cell">Added</TableHead>
+                                    <TableHead className="hidden xl:table-cell">
+                                        Added
+                                    </TableHead>
                                     <TableHead className="w-12 pr-4">
                                         <span className="sr-only">Actions</span>
                                     </TableHead>
@@ -168,7 +193,10 @@ export default function BannersIndex({
                                         key={banner.uuid}
                                         className="cursor-pointer"
                                         onClick={() => {
-                                            router.visit(admin.banners.show(banner.uuid).url);
+                                            router.visit(
+                                                admin.banners.show(banner.uuid)
+                                                    .url,
+                                            );
                                         }}
                                     >
                                         <TableCell className="pl-4">
@@ -176,7 +204,9 @@ export default function BannersIndex({
                                                 <div className="flex h-12 w-20 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-muted/50">
                                                     {banner.image_url ? (
                                                         <img
-                                                            src={banner.image_url}
+                                                            src={
+                                                                banner.image_url
+                                                            }
                                                             alt=""
                                                             width={80}
                                                             height={48}
@@ -198,8 +228,16 @@ export default function BannersIndex({
                                             {banner.sort_order}
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant={banner.is_active ? "default" : "secondary"}>
-                                                {banner.is_active ? "Active" : "Inactive"}
+                                            <Badge
+                                                variant={
+                                                    banner.is_active
+                                                        ? "default"
+                                                        : "secondary"
+                                                }
+                                            >
+                                                {banner.is_active
+                                                    ? "Active"
+                                                    : "Inactive"}
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="hidden text-xs text-muted-foreground xl:table-cell">
@@ -207,7 +245,9 @@ export default function BannersIndex({
                                         </TableCell>
                                         <TableCell
                                             className="pr-4 text-right"
-                                            onClick={(event) => event.stopPropagation()}
+                                            onClick={(event) =>
+                                                event.stopPropagation()
+                                            }
                                         >
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
@@ -224,21 +264,29 @@ export default function BannersIndex({
                                                     <DropdownMenuItem
                                                         onClick={() =>
                                                             router.visit(
-                                                                admin.banners.show(banner.uuid).url,
+                                                                admin.banners.show(
+                                                                    banner.uuid,
+                                                                ).url,
                                                             )
                                                         }
                                                     >
                                                         <Eye />
                                                         View details
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={() => openEdit(banner)}>
+                                                    <DropdownMenuItem
+                                                        onClick={() =>
+                                                            openEdit(banner)
+                                                        }
+                                                    >
                                                         <Pencil />
                                                         Edit
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator />
                                                     <DropdownMenuItem
                                                         className="text-destructive focus:text-destructive"
-                                                        onClick={() => setDeleting(banner)}
+                                                        onClick={() =>
+                                                            setDeleting(banner)
+                                                        }
                                                     >
                                                         <Trash2 />
                                                         Remove
@@ -259,8 +307,12 @@ export default function BannersIndex({
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    disabled={banners.current_page <= 1 || filtering}
-                                    onClick={() => goToPage(banners.links[0]?.url ?? null)}
+                                    disabled={
+                                        banners.current_page <= 1 || filtering
+                                    }
+                                    onClick={() =>
+                                        goToPage(banners.links[0]?.url ?? null)
+                                    }
                                 >
                                     Previous
                                 </Button>
@@ -270,9 +322,16 @@ export default function BannersIndex({
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    disabled={banners.current_page >= banners.last_page || filtering}
+                                    disabled={
+                                        banners.current_page >=
+                                            banners.last_page || filtering
+                                    }
                                     onClick={() =>
-                                        goToPage(banners.links[banners.links.length - 1]?.url ?? null)
+                                        goToPage(
+                                            banners.links[
+                                                banners.links.length - 1
+                                            ]?.url ?? null,
+                                        )
                                     }
                                 >
                                     Next
@@ -283,7 +342,11 @@ export default function BannersIndex({
                 )}
             </div>
 
-            <BannerFormDialog open={formOpen} onOpenChange={setFormOpen} banner={editing} />
+            <BannerFormDialog
+                open={formOpen}
+                onOpenChange={setFormOpen}
+                banner={editing}
+            />
             <BannerDeleteDialog
                 open={deleting !== null}
                 onOpenChange={(open) => {
@@ -299,10 +362,6 @@ export default function BannersIndex({
 
 BannersIndex.layout = {
     breadcrumbs: [
-        {
-            title: "Content",
-            href: admin.dashboard().url,
-        },
         {
             title: "Banners",
             href: admin.banners.index().url,

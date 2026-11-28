@@ -339,11 +339,11 @@ CategoryShow.layout = {
     breadcrumbs: [
         {
             title: "Categories",
-            href: admin.dashboard().url,
+            href: admin.categories.index().url,
         },
         {
-            title: "Categories",
-            href: admin.categories.index().url,
+            title: "Category",
+            href: "#",
         },
     ],
 };

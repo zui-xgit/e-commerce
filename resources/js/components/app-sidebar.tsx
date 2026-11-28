@@ -30,8 +30,8 @@ import admin from "@/routes/admin";
 
 const topItems: NavItem[] = [
     {
-        title: "Dashboard",
-        href: admin.dashboard(),
+        title: "Overview",
+        href: admin.overview(),
         icon: LayoutGrid,
     },
 ];
@@ -67,7 +67,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={admin.dashboard()} prefetch>
+                            <Link href={admin.overview()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -76,7 +76,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain groupLable="Top" items={topItems} />
+                <NavMain items={topItems} />
                 <NavMain groupLable="Store" items={storeItems} />
                 <NavMain groupLable="People" items={peopleItems} />
                 <NavMain groupLable="Content" items={contentItems} />

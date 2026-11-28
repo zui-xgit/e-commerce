@@ -11,7 +11,7 @@ import { useCurrentUrl } from "@/hooks/use-current-url";
 import type { NavItem } from "@/types";
 
 export function NavMain({
-    groupLable = "Platform",
+    groupLable,
     items,
 }: {
     groupLable?: string;
@@ -23,7 +23,7 @@ export function NavMain({
 
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>{groupLable}</SidebarGroupLabel>
+            {groupLable && <SidebarGroupLabel>{groupLable}</SidebarGroupLabel>}
 
             <SidebarMenu>
                 {items.map((item) => (

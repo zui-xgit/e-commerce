@@ -17,9 +17,10 @@ type StorefrontInputProps = Omit<ComponentProps<'input'>, 'size'> & {
 };
 
 /**
- * One source of truth for storefront field chrome: 48px tall, 12px radius,
- * hairline border, brand focus ring. Shared with non-input controls such as
- * the checkout country `SelectTrigger`.
+ * Storefront skin for the shadcn Input: structure, sizing, radius, padding,
+ * shadow, and transitions stay untouched. Only colors, border color, focus,
+ * selection, placeholder, file, and error states use storefront tokens.
+ * Shared with non-input controls such as the checkout country `SelectTrigger`.
  */
 export function storefrontInputClass({
     invalid = false,
@@ -29,12 +30,12 @@ export function storefrontInputClass({
     variant?: StorefrontInputVariant;
 } = {}) {
     return cn(
-        'h-12 w-full min-w-0 rounded-xl border-line bg-surface px-3 text-base text-ink shadow-none transition-[border-color,box-shadow] selection:bg-brand selection:text-surface placeholder:text-ink-muted hover:border-brand focus-visible:border-brand focus-visible:ring-[3px] focus-visible:ring-brand/20 focus-visible:outline-none! disabled:cursor-not-allowed disabled:opacity-60 data-[size=default]:h-12 sm:text-sm',
+        'border-line bg-surface text-ink selection:bg-brand selection:text-surface placeholder:text-ink-muted hover:border-brand focus-visible:border-brand focus-visible:ring-brand/20 focus-visible:outline-none! dark:bg-surface dark:placeholder:text-ink-muted file:text-ink',
         variant === 'soft' && 'bg-surface-alt',
         variant === 'bare' &&
             'rounded-none border-0 bg-transparent px-0 text-center font-bold tabular-nums shadow-none hover:border-transparent focus-visible:border-transparent focus-visible:ring-0',
         invalid &&
-            'border-error hover:border-error focus-visible:border-error focus-visible:ring-error/20 aria-invalid:border-error aria-invalid:ring-error/20',
+            'border-error hover:border-error focus-visible:border-error focus-visible:ring-error/20 aria-invalid:border-error aria-invalid:ring-error/20 dark:aria-invalid:ring-error/20',
     );
 }
 

@@ -1,23 +1,23 @@
-import { Head, router } from '@inertiajs/react';
-import { Eye, MoreHorizontal, PackageOpen, Trash2 } from 'lucide-react';
-import { useCallback, useRef, useState } from 'react';
+import { Head, router } from "@inertiajs/react";
+import { Eye, MoreHorizontal, PackageOpen, Trash2 } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
 import {
     OrderDeleteDialog,
     type OrderDeleteTarget,
-} from '@/components/admin/orders/order-delete-dialog';
-import { OrderFiltersBar } from '@/components/admin/orders/order-filters';
-import { OrderStatusBadge } from '@/components/admin/orders/order-status-badge';
-import Heading from '@/components/heading';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+} from "@/components/admin/orders/order-delete-dialog";
+import { OrderFiltersBar } from "@/components/admin/orders/order-filters";
+import { OrderStatusBadge } from "@/components/admin/orders/order-status-badge";
+import Heading from "@/components/heading";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
     Table,
     TableBody,
@@ -25,22 +25,22 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
-import { useSiteSettings } from '@/hooks/use-site-settings';
-import { formatOrderDate } from '@/lib/admin-orders';
-import { formatProductPrice } from '@/lib/admin-products';
-import admin from '@/routes/admin';
+} from "@/components/ui/table";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+import { formatOrderDate } from "@/lib/admin-orders";
+import { formatProductPrice } from "@/lib/admin-products";
+import admin from "@/routes/admin";
 import type {
     AdminOrderFilters,
     AdminOrderListItem,
     AdminOrdersIndexProps,
-} from '@/types/admin-orders';
+} from "@/types/admin-orders";
 
 const EMPTY_FILTERS: AdminOrderFilters = {
-    search: '',
-    status: 'all',
-    customer: '',
-    sort: 'newest',
+    search: "",
+    status: "all",
+    customer: "",
+    sort: "newest",
 };
 
 function OrderActionsMenu({
@@ -75,10 +75,10 @@ function OrderActionsMenu({
                     onClick={onDelete}
                 >
                     <Trash2 />
-                    {order.status === 'processed' ||
-                    order.status === 'cancelled'
-                        ? 'Clear order'
-                        : 'Delete order'}
+                    {order.status === "processed" ||
+                    order.status === "cancelled"
+                        ? "Clear order"
+                        : "Delete order"}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -137,12 +137,12 @@ export default function OrdersIndex({
     const hasFilters = Boolean(
         filters.search ||
         filters.customer ||
-        filters.status !== 'all' ||
-        filters.sort !== 'newest',
+        filters.status !== "all" ||
+        filters.sort !== "newest",
     );
 
     const bulkStatus =
-        filters.status === 'processed' || filters.status === 'cancelled'
+        filters.status === "processed" || filters.status === "cancelled"
             ? filters.status
             : null;
 
@@ -165,7 +165,7 @@ export default function OrdersIndex({
                     <p className="text-sm text-muted-foreground">
                         <span className="font-semibold text-foreground tabular-nums">
                             {counts.pending}
-                        </span>{' '}
+                        </span>{" "}
                         awaiting confirmation
                     </p>
                 </div>
@@ -200,7 +200,7 @@ export default function OrdersIndex({
                             className="w-full shrink-0 sm:w-auto"
                             onClick={() =>
                                 setDeleting({
-                                    kind: 'bulk',
+                                    kind: "bulk",
                                     status: bulkStatus,
                                     count: counts[bulkStatus],
                                 })
@@ -220,13 +220,13 @@ export default function OrdersIndex({
                         <div className="space-y-1">
                             <h2 className="text-base font-semibold">
                                 {hasFilters
-                                    ? 'No orders match those filters'
-                                    : 'No orders yet'}
+                                    ? "No orders match those filters"
+                                    : "No orders yet"}
                             </h2>
                             <p className="mx-auto max-w-sm text-sm text-muted-foreground">
                                 {hasFilters
-                                    ? 'Try another customer, status or search term.'
-                                    : 'New checkout orders will appear here, ready for a confirmation call.'}
+                                    ? "Try another customer, status or search term."
+                                    : "New checkout orders will appear here, ready for a confirmation call."}
                             </p>
                         </div>
                         {hasFilters && (
@@ -276,8 +276,8 @@ export default function OrdersIndex({
                                                 </p>
                                                 <p className="text-xs text-muted-foreground">
                                                     {order.isGuest
-                                                        ? 'Guest'
-                                                        : 'Account'}
+                                                        ? "Guest"
+                                                        : "Account"}
                                                 </p>
                                             </TableCell>
                                             <TableCell>
@@ -287,7 +287,7 @@ export default function OrdersIndex({
                                                 <p className="truncate text-xs text-muted-foreground">
                                                     {order.phone ||
                                                         order.customerEmail ||
-                                                        '—'}
+                                                        "—"}
                                                 </p>
                                             </TableCell>
                                             <TableCell className="flex items-center gap-3 text-sm text-muted-foreground tabular-nums">
@@ -315,7 +315,7 @@ export default function OrdersIndex({
                                                         <Badge variant="outline">
                                                             {
                                                                 order.shortfallUnits
-                                                            }{' '}
+                                                            }{" "}
                                                             short
                                                         </Badge>
                                                     )}
@@ -339,7 +339,7 @@ export default function OrdersIndex({
                                                     }
                                                     onDelete={() =>
                                                         setDeleting({
-                                                            kind: 'single',
+                                                            kind: "single",
                                                             order,
                                                         })
                                                     }
@@ -371,7 +371,7 @@ export default function OrdersIndex({
                                         Previous
                                     </Button>
                                     <span className="px-1 text-xs text-muted-foreground tabular-nums">
-                                        {orders.current_page} /{' '}
+                                        {orders.current_page} /{" "}
                                         {orders.last_page}
                                     </span>
                                     <Button
@@ -407,8 +407,5 @@ export default function OrdersIndex({
 }
 
 OrdersIndex.layout = {
-    breadcrumbs: [
-        { title: 'Store', href: admin.dashboard().url },
-        { title: 'Orders', href: admin.orders.index().url },
-    ],
+    breadcrumbs: [{ title: "Orders", href: admin.orders.index().url }],
 };

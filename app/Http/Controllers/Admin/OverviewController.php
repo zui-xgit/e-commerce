@@ -9,7 +9,7 @@ use Inertia\Inertia;
 
 class OverviewController extends Controller
 {
-    public function dashboard() {
-        return Inertia::render('admin/overview/dashboard'); 
+    public function overview() {
+        return Inertia::render('admin/overview'); 
     }
 }

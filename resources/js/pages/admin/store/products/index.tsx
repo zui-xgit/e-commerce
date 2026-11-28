@@ -408,10 +408,6 @@ export default function ProductsIndex({
 ProductsIndex.layout = {
     breadcrumbs: [
         {
-            title: "Store",
-            href: admin.dashboard().url,
-        },
-        {
             title: "Products",
             href: admin.products.index().url,
         },

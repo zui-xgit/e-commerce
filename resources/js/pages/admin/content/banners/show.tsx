@@ -38,7 +38,10 @@ export default function BannerShow({ banner }: { banner: AdminBannerDetail }) {
                             </p>
                         </div>
                     </div>
-                    <Button onClick={() => setEditing(true)} className="w-full sm:w-auto">
+                    <Button
+                        onClick={() => setEditing(true)}
+                        className="w-full sm:w-auto"
+                    >
                         <Pencil />
                         Edit banner
                     </Button>
@@ -47,7 +50,9 @@ export default function BannerShow({ banner }: { banner: AdminBannerDetail }) {
                 <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
                     <Card className="gap-0 overflow-hidden py-0">
                         <CardHeader className="border-b px-6 py-4">
-                            <CardTitle className="text-base">Banner image</CardTitle>
+                            <CardTitle className="text-base">
+                                Banner image
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="p-4 sm:p-6">
                             {banner.image_url ? (
@@ -66,7 +71,9 @@ export default function BannerShow({ banner }: { banner: AdminBannerDetail }) {
                                         <ImageIcon className="size-5 text-muted-foreground" />
                                     </div>
                                     <div className="space-y-1">
-                                        <p className="text-sm font-medium">No image available</p>
+                                        <p className="text-sm font-medium">
+                                            No image available
+                                        </p>
                                         <p className="text-xs text-muted-foreground">
                                             Edit this banner to upload an image.
                                         </p>
@@ -78,24 +85,44 @@ export default function BannerShow({ banner }: { banner: AdminBannerDetail }) {
 
                     <Card className="gap-0 py-0">
                         <CardHeader className="border-b px-6 py-4">
-                            <CardTitle className="text-base">Banner details</CardTitle>
+                            <CardTitle className="text-base">
+                                Banner details
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="px-6 py-5">
                             <dl className="space-y-4">
                                 <Detail
                                     label="Status"
                                     value={
-                                        <Badge variant={banner.is_active ? "default" : "secondary"}>
-                                            {banner.is_active ? "Active" : "Inactive"}
+                                        <Badge
+                                            variant={
+                                                banner.is_active
+                                                    ? "default"
+                                                    : "secondary"
+                                            }
+                                        >
+                                            {banner.is_active
+                                                ? "Active"
+                                                : "Inactive"}
                                         </Badge>
                                     }
                                 />
                                 <Detail
                                     label="Sort order"
-                                    value={<span className="tabular-nums">{banner.sort_order}</span>}
+                                    value={
+                                        <span className="tabular-nums">
+                                            {banner.sort_order}
+                                        </span>
+                                    }
                                 />
-                                <Detail label="Created" value={banner.created_at ?? "—"} />
-                                <Detail label="Updated" value={banner.updated_at ?? "—"} />
+                                <Detail
+                                    label="Created"
+                                    value={banner.created_at ?? "—"}
+                                />
+                                <Detail
+                                    label="Updated"
+                                    value={banner.updated_at ?? "—"}
+                                />
                                 <Detail
                                     label="UUID"
                                     value={
@@ -110,17 +137,17 @@ export default function BannerShow({ banner }: { banner: AdminBannerDetail }) {
                 </div>
             </div>
 
-            <BannerFormDialog open={editing} onOpenChange={setEditing} banner={banner} />
+            <BannerFormDialog
+                open={editing}
+                onOpenChange={setEditing}
+                banner={banner}
+            />
         </>
     );
 }
 
 BannerShow.layout = {
     breadcrumbs: [
-        {
-            title: "Content",
-            href: admin.dashboard().url,
-        },
         {
             title: "Banners",
             href: admin.banners.index().url,

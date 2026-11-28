@@ -43,7 +43,7 @@ type Props = {
 const mainNavItems: NavItem[] = [
     {
         title: "Dashboard",
-        href: admin.dashboard(),
+        href: admin.overview(),
         icon: LayoutGrid,
     },
 ];
@@ -135,7 +135,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
 
                     <Link
-                        href={admin.dashboard()}
+                        href={admin.overview()}
                         prefetch
                         className="flex items-center space-x-2"
                     >

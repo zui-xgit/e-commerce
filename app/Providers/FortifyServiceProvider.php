@@ -50,7 +50,7 @@ class FortifyServiceProvider extends ServiceProvider
                Inertia::flash('toast', ['type' => 'success', 'message' => __('Logged in successfully.')]);
                
                return $user->hasRole('admin')
-                        ? redirect()->route('admin.dashboard')
+                        ? redirect()->route('admin.overview')
                         : redirect()->back();
             }
         });

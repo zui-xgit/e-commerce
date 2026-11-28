@@ -371,10 +371,6 @@ export default function CategoriesIndex({
 CategoriesIndex.layout = {
     breadcrumbs: [
         {
-            title: "Store",
-            href: admin.dashboard().url,
-        },
-        {
             title: "Categories",
             href: admin.categories.index().url,
         },

@@ -15,7 +15,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // OVERVIEW
-    Route::get('/dashboard', [OverviewController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/overview', [OverviewController::class, 'overview'])->name('admin.overview');
 
     // STORE
     Route::get('admin/orders/index', [OrderController::class, 'index'])->name('admin.orders.index');

@@ -1,18 +1,18 @@
-import { Head, router, usePage } from '@inertiajs/react';
-import { AlertTriangle, Phone, Trash2 } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
-import { BackButton } from '@/components/admin/back-button';
-import { ConfirmDialog } from '@/components/admin/confirm-dialog';
+import { Head, router, usePage } from "@inertiajs/react";
+import { AlertTriangle, Phone, Trash2 } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { BackButton } from "@/components/admin/back-button";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import {
     OrderDeleteDialog,
     type OrderDeleteTarget,
-} from '@/components/admin/orders/order-delete-dialog';
-import { OrderStatusBadge } from '@/components/admin/orders/order-status-badge';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+} from "@/components/admin/orders/order-delete-dialog";
+import { OrderStatusBadge } from "@/components/admin/orders/order-status-badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
     Table,
     TableBody,
@@ -20,12 +20,12 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
-import { useSiteSettings } from '@/hooks/use-site-settings';
-import { formatOrderDate, unitsLabel } from '@/lib/admin-orders';
-import { formatProductPrice } from '@/lib/admin-products';
-import admin from '@/routes/admin';
-import type { AdminOrderDetail, AdminOrderItem } from '@/types/admin-orders';
+} from "@/components/ui/table";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+import { formatOrderDate, unitsLabel } from "@/lib/admin-orders";
+import { formatProductPrice } from "@/lib/admin-products";
+import admin from "@/routes/admin";
+import type { AdminOrderDetail, AdminOrderItem } from "@/types/admin-orders";
 
 function Detail({ label, value }: { label: string; value: ReactNode }) {
     return (
@@ -41,7 +41,7 @@ function ItemLine({
     currency,
 }: {
     item: AdminOrderItem;
-    currency: ReturnType<typeof useSiteSettings>['currency'];
+    currency: ReturnType<typeof useSiteSettings>["currency"];
 }) {
     return (
         <li className="space-y-2 border-b py-3 last:border-b-0">
@@ -49,8 +49,8 @@ function ItemLine({
                 <div className="min-w-0">
                     <p className="text-sm font-medium">{item.title}</p>
                     <p className="text-xs text-muted-foreground">
-                        {formatProductPrice(item.price, currency)} ×{' '}
-                        {item.quantity} · {item.brand || 'No brand'}
+                        {formatProductPrice(item.price, currency)} ×{" "}
+                        {item.quantity} · {item.brand || "No brand"}
                     </p>
                 </div>
                 <span className="shrink-0 text-sm font-medium tabular-nums">
@@ -59,15 +59,15 @@ function ItemLine({
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
                 <span className="tabular-nums">
-                    Deducted:{' '}
+                    Deducted:{" "}
                     <span className="font-medium text-foreground">
                         {item.confirmedQuantity}
                     </span>
                 </span>
                 <span className="tabular-nums">
-                    In stock now:{' '}
+                    In stock now:{" "}
                     <span className="font-medium text-foreground">
-                        {item.availableStock ?? 'Product removed'}
+                        {item.availableStock ?? "Product removed"}
                     </span>
                 </span>
                 {item.shortfall > 0 && (
@@ -91,9 +91,9 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
     );
     const [busy, setBusy] = useState(false);
 
-    const isPending = order.status === 'pending';
-    const isProcessed = order.status === 'processed';
-    const isClear = isProcessed || order.status === 'cancelled';
+    const isPending = order.status === "pending";
+    const isProcessed = order.status === "processed";
+    const isClear = isProcessed || order.status === "cancelled";
     const shortItems = order.items.filter((item) => item.shortfall > 0);
     const hasRemovedProduct = order.items.some(
         (item) => item.availableStock === null,
@@ -184,13 +184,13 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                             id="delete-order"
                             variant="outline"
                             onClick={() =>
-                                setDeleteTarget({ kind: 'single', order })
+                                setDeleteTarget({ kind: "single", order })
                             }
                             disabled={busy}
                             className="w-full text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
                         >
                             <Trash2 />
-                            {isClear ? 'Clear order' : 'Delete order'}
+                            {isClear ? "Clear order" : "Delete order"}
                         </Button>
                     </div>
                 </header>
@@ -224,7 +224,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                         key={item.uuid}
                                         className="tabular-nums"
                                     >
-                                        {item.title}: need {item.quantity}, have{' '}
+                                        {item.title}: need {item.quantity}, have{" "}
                                         {item.availableStock ?? 0}
                                     </li>
                                 ))}
@@ -316,7 +316,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                             >
                                                                 {unitsLabel(
                                                                     item.shortfall,
-                                                                )}{' '}
+                                                                )}{" "}
                                                                 short
                                                             </Badge>
                                                         )}
@@ -329,7 +329,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                     </TableCell>
                                                     <TableCell className="text-right text-muted-foreground tabular-nums">
                                                         {item.availableStock ??
-                                                            'Removed'}
+                                                            "Removed"}
                                                     </TableCell>
                                                     <TableCell className="pr-0 text-right font-medium tabular-nums">
                                                         {formatProductPrice(
@@ -370,7 +370,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                         {order.customer.phone}
                                                     </a>
                                                 ) : (
-                                                    'Not provided'
+                                                    "Not provided"
                                                 )
                                             }
                                         />
@@ -378,15 +378,15 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                             label="Email"
                                             value={
                                                 order.customer.email ||
-                                                'Not provided'
+                                                "Not provided"
                                             }
                                         />
                                         <Detail
                                             label="Account"
                                             value={
                                                 order.customer.isGuest
-                                                    ? 'Guest checkout'
-                                                    : 'Registered customer'
+                                                    ? "Guest checkout"
+                                                    : "Registered customer"
                                             }
                                         />
                                     </dl>
@@ -421,7 +421,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                                 .country,
                                                         ]
                                                             .filter(Boolean)
-                                                            .join('\n')}
+                                                            .join("\n")}
                                                     </span>
                                                 }
                                             />
@@ -453,7 +453,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                 {formatProductPrice(
                                                     order.total,
                                                     currency,
-                                                )}{' '}
+                                                )}{" "}
                                                 · {currency}
                                             </span>
                                         }
@@ -465,7 +465,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                 {formatProductPrice(
                                                     order.fulfilledTotal,
                                                     currency,
-                                                )}{' '}
+                                                )}{" "}
                                                 · {currency}
                                             </span>
                                         }
@@ -504,13 +504,13 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                 {order.confirmedAt && (
                                     <Detail
                                         label="Confirmed"
-                                        value={`${formatOrderDate(order.confirmedAt)}${order.confirmedBy ? ` · ${order.confirmedBy}` : ''}`}
+                                        value={`${formatOrderDate(order.confirmedAt)}${order.confirmedBy ? ` · ${order.confirmedBy}` : ""}`}
                                     />
                                 )}
                                 {order.cancelledAt && (
                                     <Detail
                                         label="Cancelled"
-                                        value={`${formatOrderDate(order.cancelledAt)}${order.cancelledBy ? ` · ${order.cancelledBy}` : ''}`}
+                                        value={`${formatOrderDate(order.cancelledAt)}${order.cancelledBy ? ` · ${order.cancelledBy}` : ""}`}
                                     />
                                 )}
                                 {order.cancellationReason && (
@@ -591,8 +591,8 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                                 <span className="mt-0.5 block text-red-500">
                                                     {item.stillShort} unit
                                                     {item.stillShort === 1
-                                                        ? ''
-                                                        : 's'}{' '}
+                                                        ? ""
+                                                        : "s"}{" "}
                                                     unfulfilled
                                                 </span>
                                             )}
@@ -602,7 +602,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                                         </TableCell>
                                         <TableCell className="text-right tabular-nums">
                                             {item.removed
-                                                ? 'Removed'
+                                                ? "Removed"
                                                 : item.available}
                                         </TableCell>
                                         <TableCell className="text-right font-medium tabular-nums">
@@ -624,7 +624,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                     </>
                 }
                 confirmLabel={
-                    hasStockIssue ? 'Confirm anyway' : 'Confirm order'
+                    hasStockIssue ? "Confirm anyway" : "Confirm order"
                 }
                 onConfirm={() =>
                     post(admin.orders.confirm(order.uuid).url, {
@@ -639,8 +639,8 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
                 title="Cancel this order?"
                 description={
                     isProcessed
-                        ? 'The units deducted for this order will be returned to stock exactly once.'
-                        : 'No stock was deducted, so nothing will be restored.'
+                        ? "The units deducted for this order will be returned to stock exactly once."
+                        : "No stock was deducted, so nothing will be restored."
                 }
                 confirmLabel="Cancel order"
                 destructive
@@ -652,8 +652,7 @@ export default function OrderShow({ order }: { order: AdminOrderDetail }) {
 
 OrderShow.layout = {
     breadcrumbs: [
-        { title: 'Store', href: admin.dashboard().url },
-        { title: 'Orders', href: admin.orders.index().url },
-        { title: 'Order', href: '#' },
+        { title: "Orders", href: admin.orders.index().url },
+        { title: "Order", href: "#" },
     ],
 };
