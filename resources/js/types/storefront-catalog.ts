@@ -1,3 +1,5 @@
+import type { StockStatus } from "@/lib/stock-status";
+
 export type StorefrontCategory = {
     uuid: string;
     name: string;
@@ -49,7 +51,7 @@ export type StorefrontProduct = {
 export type StorefrontProductDetail = StorefrontProduct & {
     images: StorefrontProductImage[];
     minimumOrderQuantity: number;
-    availabilityStatus: string | null;
+    stockStatus: Exclude<StockStatus, "low_stock">;
     shippingInformation: string | null;
     returnPolicy: string | null;
     warrantyInformation: string | null;

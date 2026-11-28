@@ -73,7 +73,6 @@ class SampleCatalogSeeder extends Seeder
                 'brand' => $this->nullableString($item['brand'] ?? null),
                 'sku' => $sku,
                 'minimum_order_quantity' => max(1, (int) ($item['minimumOrderQuantity'] ?? 1)),
-                'availability_status' => $this->nullableString($item['availabilityStatus'] ?? null),
                 'shipping_information' => $this->nullableString($item['shippingInformation'] ?? null),
                 'return_policy' => $this->nullableString($item['returnPolicy'] ?? null),
                 'warranty_information' => $this->nullableString($item['warrantyInformation'] ?? null),

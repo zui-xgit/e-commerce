@@ -5,6 +5,7 @@ import {
     ImageIcon,
     LoaderCircle,
     Mail,
+    Package,
     Save,
     Search,
     Settings2,
@@ -71,6 +72,7 @@ const valuesEqual = (current: FormValue, saved: FormValue) => {
 };
 
 const groupIcons: Record<string, LucideIcon> = {
+    inventory: Package,
     identity: Store,
     contact: Mail,
     localization: Globe2,

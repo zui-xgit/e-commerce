@@ -199,7 +199,6 @@ class CatalogTest extends TestCase
             'rating' => 4,
             'sku' => 'CAT-DEFAULT',
             'minimum_order_quantity' => 1,
-            'availability_status' => 'In stock',
             'stock' => 5,
             'is_active' => true,
             'is_featured' => false,

@@ -36,7 +36,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { AVAILABILITY_OPTIONS } from "@/lib/admin-products";
 import { cn } from "@/lib/utils";
 import admin from "@/routes/admin";
 import type {
@@ -57,7 +56,6 @@ type ProductFormValues = {
     thumbnail: File | null;
     clear_thumbnail: boolean;
     minimum_order_quantity: string;
-    availability_status: string;
     shipping_information: string;
     return_policy: string;
     warranty_information: string;
@@ -89,7 +87,6 @@ function emptyForm(): ProductFormValues {
         thumbnail: null,
         clear_thumbnail: false,
         minimum_order_quantity: "1",
-        availability_status: "in_stock",
         shipping_information: "",
         return_policy: "",
         warranty_information: "",
@@ -119,7 +116,6 @@ function formFromProduct(product: AdminProduct | null): ProductFormValues {
         brand: product.brand ?? "",
         sku: product.sku,
         minimum_order_quantity: String(product.minimum_order_quantity),
-        availability_status: product.availability_status ?? "",
         shipping_information: product.shipping_information ?? "",
         return_policy: product.return_policy ?? "",
         warranty_information: product.warranty_information ?? "",
@@ -562,8 +558,7 @@ export function ProductFormDialog({
                                         Pricing & stock
                                     </h3>
                                     <p className="text-xs text-muted-foreground">
-                                        Control price, availability, and
-                                        inventory.
+                                        Control price and inventory.
                                     </p>
                                 </div>
 
@@ -657,41 +652,6 @@ export function ProductFormDialog({
                                                 )
                                             }
                                         />
-                                    </Field>
-                                    <Field
-                                        label="Availability"
-                                        htmlFor="product-availability"
-                                        error={errors.availability_status}
-                                        className="sm:col-span-2 lg:col-span-3"
-                                    >
-                                        <Select
-                                            value={data.availability_status}
-                                            onValueChange={(value: string) =>
-                                                setData(
-                                                    "availability_status",
-                                                    value,
-                                                )
-                                            }
-                                        >
-                                            <SelectTrigger
-                                                id="product-availability"
-                                                className="w-full"
-                                            >
-                                                <SelectValue placeholder="Select availability" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {AVAILABILITY_OPTIONS.map(
-                                                    (option) => (
-                                                        <SelectItem
-                                                            key={option.value}
-                                                            value={option.value}
-                                                        >
-                                                            {option.label}
-                                                        </SelectItem>
-                                                    ),
-                                                )}
-                                            </SelectContent>
-                                        </Select>
                                     </Field>
                                 </div>
                             </section>

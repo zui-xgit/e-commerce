@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\StockStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductSaveRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Support\SiteSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -32,6 +34,8 @@ class ProductController extends Controller
             'status' => (string) $request->input('status', 'all'),
             'sort' => (string) $request->input('sort', 'newest'),
         ];
+
+        $lowStockRange = StockStatus::lowStockRange(SiteSettings::lowStockThreshold());
 
         $query = Product::query()
             ->with(['category:id,uuid,name', 'images']);
@@ -60,8 +64,8 @@ class ProductController extends Controller
             'active' => $query->where('is_active', true),
             'inactive' => $query->where('is_active', false),
             'featured' => $query->where('is_featured', true),
-            'out_of_stock' => $query->where('stock', 0),
-            'low_stock' => $query->whereBetween('stock', [1, 5]),
+            'out_of_stock' => $query->where('stock', '<', 1),
+            'low_stock' => $query->whereBetween('stock', $lowStockRange),
             default => null,
         };
 
@@ -89,7 +93,7 @@ class ProductController extends Controller
                 'rating' => $product->rating,
                 'stock' => $product->stock,
                 'minimum_order_quantity' => $product->minimum_order_quantity,
-                'availability_status' => $product->availability_status,
+                'stock_status' => $product->stock_status->value,
                 'is_active' => $product->is_active,
                 'is_featured' => $product->is_featured,
                 'shipping_information' => $product->shipping_information,
@@ -115,8 +119,8 @@ class ProductController extends Controller
             'counts' => [
                 'all' => Product::count(),
                 'active' => Product::where('is_active', true)->count(),
-                'out_of_stock' => Product::where('stock', 0)->count(),
-                'low_stock' => Product::whereBetween('stock', [1, 5])->count(),
+                'out_of_stock' => Product::where('stock', '<', 1)->count(),
+                'low_stock' => Product::whereBetween('stock', $lowStockRange)->count(),
             ],
         ]);
     }
@@ -143,7 +147,7 @@ class ProductController extends Controller
                 'rating' => $product->rating,
                 'stock' => $product->stock,
                 'minimum_order_quantity' => $product->minimum_order_quantity,
-                'availability_status' => $product->availability_status,
+                'stock_status' => $product->stock_status->value,
                 'is_active' => $product->is_active,
                 'is_featured' => $product->is_featured,
                 'shipping_information' => $product->shipping_information,
@@ -275,7 +279,6 @@ class ProductController extends Controller
             'sku' => $validated['sku'],
             'thumbnail' => $thumbnail,
             'minimum_order_quantity' => $validated['minimum_order_quantity'],
-            'availability_status' => $validated['availability_status'] ?? null,
             'shipping_information' => $validated['shipping_information'] ?? null,
             'return_policy' => $validated['return_policy'] ?? null,
             'warranty_information' => $validated['warranty_information'] ?? null,

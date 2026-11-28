@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->string('thumbnail')->nullable();
             $table->unsignedInteger('minimum_order_quantity')->default(1);
-            $table->string('availability_status')->nullable();
             $table->text('shipping_information')->nullable();
             $table->text('return_policy')->nullable();
             $table->text('warranty_information')->nullable();

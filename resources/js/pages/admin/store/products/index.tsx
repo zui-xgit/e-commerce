@@ -32,7 +32,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { availabilityLabel } from "@/lib/admin-products";
+import { stockStatusLabel } from "@/lib/stock-status";
 import admin from "@/routes/admin";
 import type {
     AdminProduct,
@@ -54,9 +54,17 @@ function StatusBadges({ product }: { product: AdminProduct }) {
                 {product.is_active ? "Active" : "Inactive"}
             </Badge>
             {product.is_featured && <Badge variant="outline">Featured</Badge>}
-            {product.stock === 0 && (
-                <Badge variant="destructive">Out of stock</Badge>
-            )}
+            <Badge
+                variant={
+                    product.stock_status === "out_of_stock"
+                        ? "destructive"
+                        : product.stock_status === "low_stock"
+                          ? "secondary"
+                          : "outline"
+                }
+            >
+                {stockStatusLabel(product.stock_status)}
+            </Badge>
         </div>
     );
 }
@@ -277,8 +285,8 @@ export default function ProductsIndex({
                                                 {product.stock}
                                             </span>
                                             <span className="block text-xs text-muted-foreground">
-                                                {availabilityLabel(
-                                                    product.availability_status,
+                                                {stockStatusLabel(
+                                                    product.stock_status,
                                                 )}
                                             </span>
                                         </TableCell>

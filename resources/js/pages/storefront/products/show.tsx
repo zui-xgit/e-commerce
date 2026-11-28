@@ -14,6 +14,7 @@ import type {
     StorefrontProduct,
     StorefrontProductDetail,
 } from "@/types/storefront-catalog";
+import { stockStatusLabel } from "@/lib/stock-status";
 import { formatPrice } from "@/lib/storefront/format-price";
 import { storefrontToast } from "@/lib/storefront/storefront-toast";
 
@@ -107,7 +108,7 @@ export default function StorefrontProductShowPage() {
         ["Category", product.categoryName],
         ["Brand", product.brand ?? "Not specified"],
         ["SKU", product.sku],
-        ["Availability", product.availabilityStatus ?? "Not specified"],
+        ["Availability", stockStatusLabel(product.stockStatus)],
         ["Return policy", product.returnPolicy ?? "Not specified"],
         ["Warranty", product.warrantyInformation ?? "Not specified"],
     ];
@@ -279,7 +280,7 @@ export default function StorefrontProductShowPage() {
                         </div>
                         <div className="sm:border-l sm:border-line sm:pl-8">
                             <strong className="block font-display text-lg font-extrabold text-ink">
-                                {product.availabilityStatus ?? "Not specified"}
+                                {stockStatusLabel(product.stockStatus)}
                             </strong>
                             <span className="text-ink-muted">Availability</span>
                         </div>

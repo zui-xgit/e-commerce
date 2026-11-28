@@ -17,24 +17,7 @@ export function formatDiscountPercentage(value: number): string {
     return discountFormatter.format(value);
 }
 
-export const AVAILABILITY_OPTIONS = [
-    { value: "in_stock", label: "In stock" },
-    { value: "out_of_stock", label: "Out of stock" },
-    { value: "preorder", label: "Preorder" },
-    { value: "backorder", label: "Backorder" },
-] as const;
-
-export function availabilityLabel(value: string | null): string {
-    return (
-        AVAILABILITY_OPTIONS.find((option) => option.value === value)?.label ??
-        (value ? value.replaceAll("_", " ") : "Not set")
-    );
-}
-
-export function stockLabel(product: {
-    stock: number;
-    availability_status: string | null;
-}): string {
+export function stockLabel(product: { stock: number }): string {
     if (product.stock === 0) {
         return "No stock";
     }

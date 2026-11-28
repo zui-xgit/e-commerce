@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\StockStatus;
+use App\Support\SiteSettings;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -12,10 +14,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * @property-read StockStatus $stock_status
+ * @property-read StockStatus $storefront_stock_status
+ */
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
+
     use HasUuids;
 
     /** @var list<string> */
@@ -30,7 +37,6 @@ class Product extends Model
         'sku',
         'thumbnail',
         'minimum_order_quantity',
-        'availability_status',
         'shipping_information',
         'return_policy',
         'warranty_information',
@@ -111,6 +117,33 @@ class Product extends Model
 
                 return (int) round((int) $this->price * (1 - $discount / 100));
             },
+        );
+    }
+
+    /**
+     * Admin status uses the configured low-stock threshold from site settings.
+     *
+     * @return Attribute<StockStatus, never>
+     */
+    protected function stockStatus(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): StockStatus => StockStatus::fromStock(
+                (int) $this->stock,
+                SiteSettings::lowStockThreshold(),
+            ),
+        );
+    }
+
+    /**
+     * Storefront status only distinguishes available from unavailable stock.
+     *
+     * @return Attribute<StockStatus, never>
+     */
+    protected function storefrontStockStatus(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): StockStatus => StockStatus::fromAvailability((int) $this->stock),
         );
     }
 }

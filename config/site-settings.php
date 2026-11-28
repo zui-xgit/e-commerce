@@ -13,6 +13,10 @@ return [
     */
 
     'groups' => [
+        'inventory' => [
+            'label' => 'Inventory',
+            'description' => 'Stock levels and alerts for products.',
+        ],
         'identity' => [
             'label' => 'Store identity',
             'description' => 'The name, marks and short description used across the store.',
@@ -50,6 +54,15 @@ return [
     */
 
     'settings' => [
+        'low_stock_threshold' => [
+            'group' => 'inventory',
+            'label' => 'Low stock threshold',
+            'type' => 'string',
+            'default' => '10',
+            'help' => 'Products with stock below this number are marked as low stock.',
+            // 'placeholder' => '10',
+            'rules' => ['required', 'integer', 'min:3', 'max:1000'],
+        ],
         'site_name' => [
             'group' => 'identity',
             'label' => 'Site name',

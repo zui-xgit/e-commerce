@@ -50,6 +50,14 @@ final class SiteSettings
     }
 
     /**
+     * Low-stock threshold configured in the site settings table.
+     */
+    public static function lowStockThreshold(): int
+    {
+        return (int) SiteSetting::get('low_stock_threshold', 10);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public static function values(): array

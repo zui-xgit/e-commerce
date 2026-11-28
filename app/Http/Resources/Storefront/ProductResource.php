@@ -48,7 +48,7 @@ class ProductResource extends JsonResource
                 ->values()
                 ->all()),
             'minimumOrderQuantity' => $product->minimum_order_quantity,
-            'availabilityStatus' => $product->availability_status,
+            'stockStatus' => $product->storefront_stock_status->value,
             'shippingInformation' => $product->shipping_information,
             'returnPolicy' => $product->return_policy,
             'warrantyInformation' => $product->warranty_information,

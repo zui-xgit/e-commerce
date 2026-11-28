@@ -28,7 +28,6 @@ class ProductSaveRequest extends FormRequest
             'rating',
             'brand',
             'description',
-            'availability_status',
             'shipping_information',
             'return_policy',
             'warranty_information',
@@ -104,10 +103,6 @@ class ProductSaveRequest extends FormRequest
             ],
             'clear_thumbnail' => ['nullable', 'boolean'],
             'minimum_order_quantity' => ['required', 'integer', 'min:1'],
-            'availability_status' => [
-                'nullable',
-                Rule::in(['in_stock', 'out_of_stock', 'preorder', 'backorder']),
-            ],
             'shipping_information' => ['nullable', 'string', 'max:2000'],
             'return_policy' => ['nullable', 'string', 'max:2000'],
             'warranty_information' => ['nullable', 'string', 'max:2000'],

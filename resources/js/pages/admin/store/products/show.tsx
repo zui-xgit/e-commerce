@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { availabilityLabel } from "@/lib/admin-products";
+import { stockStatusLabel } from "@/lib/stock-status";
 import admin from "@/routes/admin";
 import type {
     AdminProductDetail,
@@ -31,8 +31,16 @@ function ProductBadges({ product }: { product: AdminProductDetail }) {
                 {product.is_active ? "Active" : "Inactive"}
             </Badge>
             {product.is_featured && <Badge variant="outline">Featured</Badge>}
-            <Badge variant={product.stock === 0 ? "destructive" : "secondary"}>
-                {availabilityLabel(product.availability_status)}
+            <Badge
+                variant={
+                    product.stock_status === "out_of_stock"
+                        ? "destructive"
+                        : product.stock_status === "low_stock"
+                          ? "secondary"
+                          : "outline"
+                }
+            >
+                {stockStatusLabel(product.stock_status)}
             </Badge>
         </div>
     );

@@ -1,3 +1,5 @@
+import type { StockStatus } from "@/lib/stock-status";
+
 export type ProductCategory = {
     uuid: string;
     name: string;
@@ -24,7 +26,7 @@ export type AdminProduct = {
     rating: number;
     stock: number;
     minimum_order_quantity: number;
-    availability_status: string | null;
+    stock_status: StockStatus;
     is_active: boolean;
     is_featured: boolean;
     shipping_information: string | null;
